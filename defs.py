@@ -2,6 +2,7 @@ import socket
 from samp_client.client import SampClient
 import sys
 import configparser
+from config import CONFIG
 
 def localiniciado():
     hostname = socket.gethostname()
@@ -81,13 +82,13 @@ def get_samp_server_info(ip, port, admin_tag, admin_tag2):
 def salvar(channel_id, message_id):
     config = configparser.ConfigParser()
     config['MSG_ANTIGA'] = {'channel_id': str(channel_id), 'message_id': str(message_id)}
-    with open(config['arquivo'], 'w') as file:
+    with open(CONFIG['arquivo'], 'w') as file:
         config.write(file)
 
 # Essa função carregará o ID da ultima mensagem enviada pelo BOT sobre a Estátisticas do servidor.
 def carregar():
     config = configparser.ConfigParser()
-    config.read(config['arquivo'])
+    config.read(CONFIG['arquivo'])
     if 'MSG_ANTIGA' in config:
         return config['MSG_ANTIGA'].get('channel_id'), config['MSG_ANTIGA'].get('message_id')
     return None, None
